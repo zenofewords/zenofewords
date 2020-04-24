@@ -2,14 +2,12 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = bool(os.getenv('DEBUG', False))
 
 SECRET_KEY = 'u&9@(#ss^w(suxlqb374y^j3d3qo@7)%sdl)pm-dpj7w1dk8f0'
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,6 +16,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'webpack_loader',
+
+    'zenofewords.apps.ZenofewordsConfig',
 ]
 
 MIDDLEWARE = [
@@ -35,7 +37,6 @@ ROOT_URLCONF = 'zenofewords.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,7 +78,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'Europe/London'
+TIME_ZONE = 'Europe/Zagreb'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -127,4 +128,3 @@ LOGGING = {
         },
     },
 }
-

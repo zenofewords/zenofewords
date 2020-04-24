@@ -1,0 +1,69 @@
+{% load static %}
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+      <title>
+        {% block title %}Dominik Zen{% endblock title %}
+      </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta charset="utf-8">
+      <link rel="apple-touch-icon" type="image/png" sizes="150x150" href="{% static 'favicon/150x150.png' %}"/>
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/32x32.png' %}" />
+
+      {% block meta_tags %}
+        <meta name="title" content="{{ meta_title }}" />
+        <meta name="author" content="{{ meta_author }}" />
+        <meta name="description" content="{{ meta_description }}" />
+
+        <meta property="og:url" content="{{ meta_url }}/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="{{ meta_title }}" />
+        <meta property="og:description" content="{{ meta_description }}" />
+
+        <meta property="og:image" content="{{ meta_url }}{% static 'images/meta.jpg' %}" />
+        <meta property="og:image:alt" content="{{ meta_image_alt }}" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="1200" />
+
+        <meta name="twitter:image" content="{{ meta_url }}{% static 'images/meta.jpg' %}" />
+        <meta name="twitter:image:alt" content="{{ meta_image_alt }}" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:description" content="{{ meta_description }}" />
+      {% endblock meta_tags %}
+    {% endblock head %}
+
+    {% block scripts %}
+      {% render_bundle 'main' 'css' %}
+    {% endblock scripts %}
+  </head>
+
+  <body>
+    <header>
+      {% block header %}
+      {% endblock header %}
+    </header>
+
+    <main>
+      {% block content %}
+        <h1>Greetings traveller, you've stumbled upon the virtual abode of Dominik Zen</h1>
+
+        <p>For now, I can't offer more than a moment of respite but various trinkets and tidbits will be put on display soon enough.</p>
+
+        <p>If you're looking for Pokemon GO stuff, it's been <a href="https://pgo.dominikzen.com/">moved here</a>.</p>
+      {% endblock content %}
+    </main>
+
+    <footer>
+      {% block footer %}
+      {% endblock footer %}
+    </footer>
+
+    {% block body_scripts %}
+      {# {% render_bundle 'main' 'js' %} #}
+    {% endblock body_scripts %}
+  </body>
+</html>
