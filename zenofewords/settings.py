@@ -2,9 +2,16 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DEBUG = bool(os.getenv('DEBUG', False))
+
+CSRF_COOKIE_HTTPONLY = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
+SECURE_BROWSER_XSS_FILTER = not DEBUG
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = not DEBUG and bool(os.getenv('SECURE_SSL_REDIRECT', False))
+SESSION_COOKIE_SECURE = not DEBUG
 
 SECRET_KEY = 'u&9@(#ss^w(suxlqb374y^j3d3qo@7)%sdl)pm-dpj7w1dk8f0'
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
@@ -58,7 +65,7 @@ DATABASES = {
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
-        'PORT': '',
+        'PORT': os.getenv('DB_PORT'),
         'CONN_MAX_AGE': 600,
     }
 }
