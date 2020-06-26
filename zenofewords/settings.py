@@ -13,7 +13,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = not DEBUG and bool(os.getenv('SECURE_SSL_REDIRECT', False))
 SESSION_COOKIE_SECURE = not DEBUG
 
-SECRET_KEY = 'u&9@(#ss^w(suxlqb374y^j3d3qo@7)%sdl)pm-dpj7w1dk8f0'
+SECRET_KEY = os.getenv('SECRET_KEY')
 ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS').split(',')]
 
 INSTALLED_APPS = [
