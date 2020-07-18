@@ -2,6 +2,6 @@ asgiref==3.2.10
 Django==3.0.8
 django-webpack-loader==0.7.0
 psycopg2-binary==2.8.5
-python-dotenv==0.13.0
+python-dotenv==0.14.0
 pytz==2020.1
 sqlparse==0.3.1
