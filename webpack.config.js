@@ -1,9 +1,9 @@
-var path = require('path')
-var MiniCssExtractPlugin = require('mini-css-extract-plugin')
-var TerserPlugin = require('terser-webpack-plugin')
-var WebpackBundleTracker = require('webpack-bundle-tracker')
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WebpackBundleTracker = require('webpack-bundle-tracker')
 
 module.exports = {
+  mode: 'development',
   entry: {
     main: './static/javascript/main',
   },
@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'staticfiles/bundles'),
     publicPath: 'http://localhost:8080/static/bundles/',
   },
-  devtool: 'inline-source-map',
+  devtool: 'eval-source-map',
   devServer: {
     headers: {
       'Access-Control-Allow-Origin': '*'
@@ -61,14 +61,10 @@ module.exports = {
   },
   plugins: [
     new WebpackBundleTracker({
-      filename: './webpack-stats.json'
+      filename: './webpack-stats.json',
     }),
     new MiniCssExtractPlugin({
       filename: '[name]_[hash].css',
     }),
   ],
-  optimization: {
-    minimizer: [new TerserPlugin()],
-  },
-  mode: 'development',
 }

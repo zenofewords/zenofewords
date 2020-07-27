@@ -63,7 +63,7 @@
     </footer>
 
     {% block body_scripts %}
-      {# {% render_bundle 'main' 'js' %} #}
+      {% render_bundle 'main' 'js' attrs='async' %}
     {% endblock body_scripts %}
   </body>
 </html>

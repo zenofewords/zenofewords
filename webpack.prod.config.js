@@ -1,11 +1,11 @@
-var config = require('./webpack.config.js')
-var MiniCssExtractPlugin = require('mini-css-extract-plugin')
-var WebpackBundleTracker = require('webpack-bundle-tracker')
+const config = require('./webpack.config.js')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 config.mode = 'production'
+config.devtool = ''
 config.output.publicPath = ''
-config.plugins = [
-  new MiniCssExtractPlugin({filename: '[name]_[hash].css'}),
-  new WebpackBundleTracker({filename: './webpack-stats-prod.json'}),
-]
+config.plugins.find(
+  obj => obj['options']['filename'] === './webpack-stats.json'
+)['options']['filename'] = './webpack-stats-prod.json'
+config.plugins = [...config.plugins, new CleanWebpackPlugin()]
 module.exports = config
