@@ -5,7 +5,7 @@ const WebpackBundleTracker = require('webpack-bundle-tracker')
 module.exports = {
   mode: 'development',
   entry: {
-    main: './static/javascript/main',
+    base: './static/javascript/base',
   },
   output: {
     filename: '[name]_[hash].js',
