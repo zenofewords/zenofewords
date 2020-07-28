@@ -6,6 +6,7 @@ module.exports = {
   mode: 'development',
   entry: {
     base: './static/javascript/base',
+    homepage: './static/javascript/homepage',
   },
   output: {
     filename: '[name]_[hash].js',

@@ -44,16 +44,59 @@
   <body>
     <header>
       {% block header %}
+        <nav>
+          <div class="mobile-menu">
+            <label for="mobile-menu-toggle" class="screen-reader">
+              Menu toggle
+            </label>
+            <input id="mobile-menu-toggle" class="mobile-menu-toggle" type="checkbox" />
+            <span class="mobile-menu-line"></span>
+            <span class="mobile-menu-line"></span>
+            <span class="mobile-menu-line"></span>
+
+            <ul style="top: -100%;" class="mobile-menu-list">
+              <li>
+                <a href="{% url 'personal' %}">Personal</a>
+              </li>
+              <li>
+                <a href="#">Professional</a>
+              </li>
+              <li>
+                <a href="#">Ramblings</a>
+              </li>
+              <li>
+                <a href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          {% block desktop_nav %}
+          <div class="desktop-menu">
+            <a href="{% url 'personal' %}" class="desktop-menu-link desktop-menu-link-top-left" aria-label="Personal">
+            </a>
+            <a href="#" class="desktop-menu-link desktop-menu-link-top-right" aria-label="Professional">
+            </a>
+            <a href="#" class="desktop-menu-link desktop-menu-link-bottom-left" aria-label="Ramblings">
+            </a>
+            <a href="#" class="desktop-menu-link desktop-menu-link-bottom-right" aria-label="Contac">
+            </a>
+          </div>
+          {% endblock desktop_nav %}
+        </nav>
       {% endblock header %}
     </header>
 
     <main>
       {% block content %}
-        <h1>Greetings traveller, you've stumbled upon the virtual abode of Dominik Zen</h1>
+        <div class="homepage-wrapper">
+          <div class="homepage-intro">
+            <h1>Greetings traveller, you've stumbled upon the virtual abode of Dominik Zen</h1>
 
-        <p>For now, I can't offer more than a moment of respite but various trinkets and tidbits will be put on display soon enough.</p>
+            <p>If curiosity got the best of you, <a href="#">stay awhile and listen</a>. Or visit <a href="#">my linkedin profile</a> if you're feeling all serious and "businessy".</p>
 
-        <p>If you're looking for Pokemon GO stuff, it's been <a href="https://pgo.dominikzen.com/">moved here</a>.</p>
+            <p>Looking for Pokemon GO stuff? It's been <a href="https://pgo.dominikzen.com/">moved here</a>.</p>
+          </div>
+        </div>
       {% endblock content %}
     </main>
 
@@ -63,7 +106,7 @@
     </footer>
 
     {% block body_scripts %}
-      {% render_bundle 'base' 'js' attrs='async' %}
+      {% render_bundle 'homepage' 'css' %}
     {% endblock body_scripts %}
   </body>
 </html>

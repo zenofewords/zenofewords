@@ -1,5 +1,6 @@
 @import './variables'
 
+
 html,
 body
   height: 100%
@@ -13,17 +14,24 @@ body
 
 h1
   font-size: $font-size-heading
+  font-weight: $font-weight-normal
   margin: 0 0 30px
   padding: 0 30px
+
+a
+  text-decoration: none
 
 p
   margin: 0 0 20px
   padding: 0 30px
 
 main
-  display: flex
-  flex-direction: column
   height: 100%
-  justify-content: center
-  margin: 0 auto
-  max-width: 500px
+
+.screen-reader
+  height: 1px
+  left: -100%
+  overflow: hidden
+  position: absolute
+  top: auto
+  width: 1px

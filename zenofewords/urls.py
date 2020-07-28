@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.urls import path
 
-from zenofewords.views import HomeView
+from zenofewords.views import (
+    HomepageView,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', HomeView.as_view(), name='zenofewords'),
+    path('', HomepageView.as_view(), name='homepage'),
 ]
