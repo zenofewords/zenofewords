@@ -5,16 +5,17 @@
   .mobile-menu
     display: none
 
-@media only screen and (max-width: $media-mobile-breakpoint)
-  .desktop-menu
-    display: none
 
+@media only screen and (max-width: $media-mobile-breakpoint)
   main
     height: calc(100% - 130px)
 
   nav
     display: flex
     justify-content: flex-end
+
+  .desktop-menu
+    display: none
 
   .mobile-menu
     display: flex
@@ -38,10 +39,10 @@
     z-index: 3
 
     li
-      margin: 0 0 30px
+      margin: 0 0 25px
 
       &:first-of-type
-        margin: 20vh 0 30px
+        margin: 20vh 0 25px
 
     a
       color: $color-black
