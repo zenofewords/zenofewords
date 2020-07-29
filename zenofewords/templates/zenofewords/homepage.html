@@ -1,0 +1,33 @@
+{% extends 'zenofewords/base.html' %}
+{% load render_bundle from webpack_loader %}
+
+{% block scripts %}
+  {{ block.super }}
+  {% render_bundle 'homepage' 'css' %}
+{% endblock scripts %}
+
+{% block header %}
+  {{ block.super }}
+  <div class="desktop-menu">
+    <a href="{% url 'personal' %}" class="desktop-menu-link desktop-menu-link-top-left" aria-label="Personal"></a>
+    <a href="{% url 'professional' %}" class="desktop-menu-link desktop-menu-link-top-right" aria-label="Professional"></a>
+    <a href="{% url 'ramblings' %}" class="desktop-menu-link desktop-menu-link-bottom-left" aria-label="Ramblings"></a>
+    <a href="{% url 'contact' %}" class="desktop-menu-link desktop-menu-link-bottom-right" aria-label="Contact"></a>
+  </div>
+{% endblock header %}
+
+{% block content %}
+  <div class="homepage-wrapper">
+    <div class="homepage-intro">
+      <h1>Greetings traveller, you've stumbled upon the virtual abode of Dominik Zen</h1>
+
+      <p>
+        Hither is a place under permanent construction, subject to the whims of its creator. It's where I keep <a href="{% url 'ramblings' %}">my thoughts</a> and experiment with web technology.
+      </p>
+
+      <p>
+        Looking for Pokemon GO stuff? It's been <a href="https://pgo.dominikzen.com/" rel="noopener noreferrer">moved here</a>.
+      </p>
+    </div>
+  </div>
+{% endblock content %}

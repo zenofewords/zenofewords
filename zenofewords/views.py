@@ -1,9 +1,7 @@
 from django.views.generic import TemplateView
 
 
-class HomepageView(TemplateView):
-    template_name = 'zenofewords/base.html'
-
+class MetaMixin(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         data = {
@@ -15,3 +13,23 @@ class HomepageView(TemplateView):
         }
         context.update(data)
         return context
+
+
+class ContactView(MetaMixin):
+    template_name = 'zenofewords/contact.html'
+
+
+class PersonalView(MetaMixin):
+    template_name = 'zenofewords/personal.html'
+
+
+class ProfessionalView(MetaMixin):
+    template_name = 'zenofewords/professional.html'
+
+
+class RamblingsView(MetaMixin):
+    template_name = 'zenofewords/ramblings.html'
+
+
+class HomepageView(MetaMixin):
+    template_name = 'zenofewords/homepage.html'
