@@ -1,5 +1,6 @@
 {% load static %}
 {% load render_bundle from webpack_loader %}
+{% load zenofewords_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,19 +57,19 @@
 
             <ul style="top: -100%;" class="mobile-menu-list">
               <li>
-                <a href="{% url 'homepage' %}">Home</a>
+                {% mobile_menu_link_tag 'home' request.path %}
               </li>
               <li>
-                <a href="{% url 'personal' %}">Personal</a>
+                {% mobile_menu_link_tag 'bio' request.path %}
               </li>
               <li>
-                <a href="{% url 'professional' %}">Professional</a>
+                {% mobile_menu_link_tag 'work' request.path %}
               </li>
               <li>
-                <a href="{% url 'ramblings' %}">Ramblings</a>
+                {% mobile_menu_link_tag 'thoughts' request.path %}
               </li>
               <li>
-                <a href="{% url 'contact' %}">Contact</a>
+                {% mobile_menu_link_tag 'contact' request.path %}
               </li>
             </ul>
           </div>

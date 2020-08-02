@@ -1,8 +1,21 @@
-{% extends 'zenofewords/base.html' %}
+{% extends 'zenofewords/pages.html' %}
 {% load render_bundle from webpack_loader %}
+{% load zenofewords_tags %}
 
-{% block content %}
-  <div class="contact-wrapper">
-    contact info
-  </div>
-{% endblock content %}
+
+{% block title %}
+  {{ block.super }} - Contact
+{% endblock title %}
+
+{% block pages_title %}
+  When you need to get a message through
+{% endblock pages_title %}
+
+{% block pages_content %}
+  <p>
+    Event though I can be found on several social networks, I'd prefer all professional inquiries to {% external_link_tag 'https://www.linkedin.com/in/zenofewords/' 'go through LinkedIn' '.' %}
+  </p>
+  <p>
+    Feel free to {% external_link_tag 'https://www.reddit.com/message/compose/?to=zenofewords' 'direct message me at reddit' ',' %} if you'd like to let me know there's something missing in the Breakpoint Calculator or Good to Go.
+  </p>
+{% endblock pages_content %}

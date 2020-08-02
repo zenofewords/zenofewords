@@ -6,7 +6,9 @@ module.exports = {
   mode: 'development',
   entry: {
     base: './static/javascript/base',
-    homepage: './static/javascript/homepage',
+    pages: './static/javascript/pages',
+    home: './static/javascript/home',
+    thoughts: './static/javascript/thoughts',
     queries: './static/javascript/queries',
   },
   output: {
