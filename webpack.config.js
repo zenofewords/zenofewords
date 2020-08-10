@@ -8,7 +8,6 @@ module.exports = {
     base: './static/javascript/base',
     pages: './static/javascript/pages',
     home: './static/javascript/home',
-    thoughts: './static/javascript/thoughts',
     queries: './static/javascript/queries',
   },
   output: {

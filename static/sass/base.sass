@@ -14,6 +14,10 @@ body
   line-height: $line-height-body
   margin: 0
 
+main
+  display: block
+  flex: 1 0 auto
+
 footer
   flex: 0 0 0
 
@@ -30,27 +34,27 @@ h2
   padding: 0 20px
 
 h3
-  font-size: $font-size-body
+  font-size: $font-size-subheading
   font-weight: $font-weight-normal
-  margin: 0 0 20px
+  margin: 40px 0 20px
   padding: 0
 
-a
-  color: $color-grey
-  text-decoration: none
-  transition-duration: $transition-duration-short
-  transition-property: opacity
-
-  &:hover
-    opacity: .6
+h4
+  font-size: $font-size-body
+  margin: 0 0 20px
 
 p
   margin: 0 0 20px
   padding: 0 30px
 
-main
-  display: block
-  flex: 1 0 auto
+a
+  color: $color-red
+  text-decoration: none
+  transition-duration: $transition-duration-short
+  transition-property: color
+
+  &:hover
+    color: $color-black
 
 .screen-reader
   height: 1px

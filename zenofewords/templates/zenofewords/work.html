@@ -1,5 +1,6 @@
 {% extends 'zenofewords/pages.html' %}
 {% load render_bundle from webpack_loader %}
+{% load zenofewords_tags %}
 
 
 {% block title %}
@@ -11,7 +12,174 @@
 {% endblock pages_title %}
 
 {% block pages_content %}
-  <h3>
-    ...and most days I feel like I've started just a few months ago.
-  </h3>
+  <p>
+    ...and some days I feel like I've started just a few months ago.
+  </p>
+  <p>
+    Even though I've used a number of languages, frameworks, and operating systems to create software it's not
+    seldom that I'm humbled by the vast amount of knowledge that's still out there.
+  </p>
+  <p>
+    Listed below are side gigs and various projects I've worked on. Including a few I'm not allowed to name or link
+    to due to NDA, but can provide a brief summary.
+  </p>
+
+  <h2>
+    2018 - present, full stack freelance developer
+  </h2>
+
+  {% content_block_tag %}
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://www.navis.hr/en/' 'Navis' ',' %} a clean website for a starting business
+    </h3>
+    <p>
+      I got to further hone my frontend skills and try out Netlify to deploy Navis. The client requested the site to
+      be pure HTML/CSS, which was actually refreshing.
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3 id="breakpoint-calculator">
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://pgo.dominikzen.com/breakpoint-calc/?attacker=jolteon&attacker_level=15&attacker_quick_move=88&attacker_cinematic_move=90&attacker_atk_iv=15&weather_condition=4&friendship_boost=1.10&defender=vaporeon&defender_quick_move=16&defender_cinematic_move=22&defender_cpm=0.7300000003&top_counter_order=rnk&tab=breakpoints' '"The breakpoint calculator"' ',' %}
+      Pokémon Go tools created for personal use which eventually found widespread use within the global community
+    </h3>
+    <p>
+      The calculator peaked in November 2018 with over 8500 monthly users and is still in use today. I’ve established
+      a solid foothold in frontend and DevOps while creating and maintaining these tools.
+    </p>
+    <p>
+      Eager to be more efficient with in-game resources, I've built a tool which simplifies one of the few complicated
+      mechanics in Pokémon Go. It started off looking like an ugly excel spreadsheet, but just like many Pokémon do,
+      it evolved.
+    </p>
+    <p>
+      The first big step was the introduction of Bootstrap, as frontend was not my strong suit at the time. The next
+      priority was making the site mobile friendly. Since then it's been through several iterations, the biggest of
+      which was the... removal of Bootstrap. It wasn't easy to "redesign" the whole site and I still had to replace
+      the icons, but couldn't decide what to use so I made my own with CSS.
+    </p>
+    <p>
+      When providing feedback, users usually brought up speed and ease of use as the main reason why they preferred my
+      calculator to the competition.
+    </p>
+  </div>
+
+  <h2>
+    April 2016 – July 2020, backend and frontend developer at
+    {% external_link_tag 'https://www.pinkdroids.com/' 'PINKDROIDS' %}
+  </h2>
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://www.profil-klett.hr/izzi/' 'Profil Klett - IZZI' ',' %}
+      Profil Klett is one of Croatia’s largest book and digital content publishers
+    </h3>
+    <p>
+      I’ve created several interactive physics simulations for high school students using Vue.js. While it's
+      normally used to supplement the traditional curriculum, the platform is currently in use to support learning
+      from home.
+    </p>
+    <p>
+      This was the closest I got to game development and overall it was quite fun!
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      US based company which works with landlords to design, build, and operate office space for other companies
+    </h3>
+    <p>
+      Despite the complete switch to frontend I enjoyed implementing curious design ideas together with using a
+      headless CMS and API to manage content. Everything was done with Node.js and React backed by TypeScript.
+    </p>
+    <p>
+      At times, it felt like a game between the devs and the designers. Could they come up with a design we couldn't
+      pull off? They could not :)
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      Part of a public school enrollment platform
+    </h3>
+    <p>
+      This was the most complex project I’ve been involved in, often featuring a mix of backend and UI tasks with
+      accessibility in mind. The huge server-side was dealt with Python, Django and Django Rest Framework whereas the
+      frontend was in React's capable hands.
+    </p>
+    <p>
+      Among other skills, understanding and application of CSS was a requirement. It's where I learned the importance
+      of website styling and good UX.
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      A business situated in San Francisco with primary focus on hospitality, art, and humanitarian work
+    </h3>
+    <p>
+      From building administration functionality to handling reservations and processing asynchronous credit card
+      payments - this project was never in short supply of interesting assignments.
+    </p>
+    <p>
+      My debut with the amazing droids crew and a stepping stone to React, Django Rest framework, and unit testing.
+    </p>
+  </div>
+
+  <h2>
+    April 2014 – March 2016, backend developer at
+    {% external_link_tag 'https://www.linkedin.com/company/styria-digital-hrvatska/' 'Styria Digital Development' %}
+  </h2>
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://www.24sata.hr/' '24sata' ',' %} Croatia's leading news portal
+    </h3>
+    <p>
+      Although brief, maintenance work on the news portal with the highest reach of unique users in Croatia
+      provided valuable experience. I was responsible for fixing bugs and making sure deploys are properly executed
+      in collaboration with Styria's DevOps team.
+    </p>
+    <p>
+      These activities eventually sparked interest into a whole new world and motivated me to start playing around
+      with web servers and hosting on DigitalOcean.
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://express.24sata.hr/' 'Express' ',' %} news portal
+    </h3>
+    <p>
+      By now, I was experienced enough to tackle this project in the lead backend developer role. Like most Styria's
+      sites at that time, the backend was done in Python and Django.
+    </p>
+    <p>
+      Apart from new insight into backend, I've got a first-hand taste of team dynamics.
+    </p>
+  </div>
+
+  <div class="content-block">
+    <h3>
+      {% jump_to_link_tag 'link-to-top' 'Jump to top' %}
+      {% external_link_tag 'https://gastro.24sata.hr/' 'Gastro' ',' %} a culinary web portal
+    </h3>
+    <p>
+      This was the very beginning of my web dev career and with
+      {% external_link_tag 'https://www.linkedin.com/in/mislavcimpersak/' 'Mislav Cimperšak' '\'s' %} mentoring it
+      couldn't have been a better start.
+    </p>
+    <p>
+      As a member of the backend team, I've contributed to Gastro's Python codebase and later took care of
+      maintenance along with implementing the occasional new feature.
+    </p>
+  </div>
 {% endblock pages_content %}

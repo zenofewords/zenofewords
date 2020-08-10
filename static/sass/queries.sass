@@ -7,16 +7,13 @@
 
 
 @media only screen and (max-width: $media-mobile-breakpoint)
-  h1,
-  h2
-    padding: 0
-
-  main
-    height: calc(100% - 130px)
-
   nav
     display: flex
     justify-content: flex-end
+
+  h1,
+  h2
+    padding: 0
 
   .desktop-menu
     display: none
@@ -31,16 +28,25 @@
     height: 100vh
     left: 0
     list-style: none
-    margin: 100vh 0 0
+    margin: 0
     padding: 0
     position: absolute
     text-align: center
+    top: 0
     transform: translate(-150%, 0)
     transform-origin: 0% 0%
     transition-duration: $transition-duration-short
-    transition-property: transform
+    transition-property: opacity, transform
     width: 100%
     z-index: 3
+
+    &::after
+      border-bottom: 1px solid $color-red
+      bottom: 0
+      content: ''
+      left: 0
+      position: absolute
+      width: 100%
 
     li
       margin: 0 0 25px
@@ -66,6 +72,7 @@
 
     &:checked ~
       .mobile-menu-list
+        opacity: 1 !important // sass-lint:disable-line no-important
         transform: translate(0, 0)
 
       .mobile-menu-line
@@ -89,35 +96,43 @@
     z-index: 4
 
     &:last-of-type
+      background-color: $color-red
       transform-origin: 100% 100%
 
   .link-back
     left: 21px
-    padding: 5px 5px 5px 23px
+    padding: 5px 5px 5px 21px
     position: absolute
     top: 16px
-
-    &::after
-      border-right: 10px solid $color-black
 
   .link-current
     position: relative
 
     &::after
       border-bottom: 7px solid transparent
-      border-right: 10px solid $color-black
+      border-left: 10px solid $color-black
       border-top: 7px solid transparent
       content: ''
       height: 0
+      left: -20px
       position: absolute
-      right: -20px
       top: 5px
-      transition-duration: $transition-duration-short
-      transition-property: border
       width: 0
+
+  .link-to-top
+    bottom: -45px
+    left: -1px
+    padding: 6px
+    top: auto
+
+  .pages-wrapper
+    margin: 20px auto 125px
 
   .pages-header-wrapper
     margin: 0 20px
+
+  .content-block
+    margin: 0 0 70px
 
   .home-wrapper
     justify-content: initial
