@@ -23,15 +23,13 @@
     color: $color-black
     font-family: $font-family-body
     font-size: $font-size-menu
-    height: 24vh
-    min-height: 160px
-    min-width: 220px
+    height: 170px
     opacity: 0
     padding: 15px 20px
     position: absolute
     transition-duration: $transition-duration-long
     transition-property: opacity
-    width: 20vw
+    width: 210px
 
   &:hover,
   &:focus
@@ -44,17 +42,17 @@
   &::after
     border-bottom: 0
     border-right: 0
-    bottom: 0
+    bottom: $position-offset-menu-item
     content: 'Bio'
-    right: 0
+    right: $position-offset-menu-item
 
 .desktop-menu-link-top-right
   &::after
     border-bottom: 0
     border-left: 0
-    bottom: 0
+    bottom: $position-offset-menu-item
     content: 'Work'
-    left: 0
+    left: $position-offset-menu-item
     text-align: right
 
 .desktop-menu-link-bottom-left
@@ -65,8 +63,8 @@
     content: 'Thoughts'
     display: flex
     justify-content: flex-start
-    right: 0
-    top: 0
+    right: $position-offset-menu-item
+    top: $position-offset-menu-item
 
 .desktop-menu-link-bottom-right
   &::after
@@ -76,8 +74,8 @@
     content: 'Contact'
     display: flex
     justify-content: flex-end
-    left: 0
-    top: 0
+    left: $position-offset-menu-item
+    top: $position-offset-menu-item
 
 .home-wrapper
   display: flex
@@ -88,7 +86,7 @@
   max-width: 500px
 
 .home-intro
-  margin: 25px 50px
+  margin: 20px 50px 25px
   position: relative
 
   h1

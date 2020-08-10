@@ -13,7 +13,7 @@
     padding: 0
 
 .pages-header-wrapper
-  border-bottom: 1px solid $color-black-10
+  border-bottom: 1px solid $color-red-40
 
 .link-back
   color: $color-black
@@ -26,22 +26,14 @@
 
   &::after
     border-bottom: 7px solid transparent
-    border-right: 10px solid $color-black-10
+    border-right: 10px solid $color-black
     border-top: 7px solid transparent
     content: ''
     height: 0
     left: -2px
     position: absolute
     top: 11px
-    transition-duration: $transition-duration-short
-    transition-property: border
     width: 0
-
-  &:hover
-    opacity: 1
-
-    &::after
-      border-right: 10px solid $color-black
 
 .content-block
   margin: 0 0 30px
@@ -56,7 +48,7 @@
   width: 20px
 
   &::after
-    border-bottom: 10px solid $color-black-10
+    border-bottom: 10px solid $color-black
     border-left: 7px solid transparent
     border-right: 7px solid transparent
     content: ''
@@ -64,15 +56,7 @@
     left: 2px
     position: absolute
     top: 7px
-    transition-duration: $transition-duration-short
-    transition-property: border
     width: 0
-
-  &:hover
-    opacity: 1
-
-    &::after
-      border-bottom: 10px solid $color-black
 
 .pages-content-wrapper
   margin: 20px auto
