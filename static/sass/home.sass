@@ -4,12 +4,14 @@
 .desktop-menu
   display: flex
   flex-wrap: wrap
-  height: 100%
+  height: 70%
   left: 50%
+  max-height: 630px
+  max-width: 630px
   position: absolute
   top: 50%
   transform: translate(-50%, -50%)
-  width: 100%
+  width: 60%
 
 .desktop-menu-link
   align-items: center
@@ -18,11 +20,20 @@
   justify-content: center
   position: relative
 
-  &::after
-    border: 2px solid $color-red-40
-    color: $color-black
+  &::before
+    color: $color-red
     font-family: $font-family-body
     font-size: $font-size-menu
+    height: 170px
+    padding: 15px 20px
+    position: absolute
+    transition-duration: $transition-duration-short
+    transition-property: color, transform
+    width: 125px
+
+  &::after
+    border: 2px solid $color-red
+    content: ''
     height: 170px
     opacity: 0
     padding: 15px 20px
@@ -35,47 +46,81 @@
   &:focus
     opacity: 1
 
+    &::before
+      color: $color-black
+      transform: translate(50%, 0)
+
     &::after
       opacity: 1
 
 .desktop-menu-link-top-left
-  &::after
-    border-bottom: 0
-    border-right: 0
+  &:hover,
+  &:focus
+    &::before
+      transform: translate(-50%, 0)
+
+  &::before
     bottom: $position-offset-menu-item
     content: 'Bio'
     right: $position-offset-menu-item
 
-.desktop-menu-link-top-right
   &::after
     border-bottom: 0
-    border-left: 0
+    border-right: 0
+    bottom: $position-offset-menu-item
+    right: $position-offset-menu-item
+
+.desktop-menu-link-top-right
+  &::before
     bottom: $position-offset-menu-item
     content: 'Work'
     left: $position-offset-menu-item
     text-align: right
+    width: 120px
+
+  &::after
+    border-bottom: 0
+    border-left: 0
+    bottom: $position-offset-menu-item
+    left: $position-offset-menu-item
+    width: 205px
 
 .desktop-menu-link-bottom-left
-  &::after
+  &:hover,
+  &:focus
+    &::before
+      transform: translate(-50%, 0)
+
+  &::before
     align-items: flex-end
-    border-right: 0
-    border-top: 0
     content: 'Thoughts'
     display: flex
     justify-content: flex-start
     right: $position-offset-menu-item
     top: $position-offset-menu-item
 
-.desktop-menu-link-bottom-right
   &::after
-    align-items: flex-end
-    border-left: 0
+    border-right: 0
     border-top: 0
+    right: $position-offset-menu-item
+    top: $position-offset-menu-item
+
+.desktop-menu-link-bottom-right
+  &::before
+    align-items: flex-end
     content: 'Contact'
     display: flex
     justify-content: flex-end
     left: $position-offset-menu-item
     top: $position-offset-menu-item
+    width: 120px
+
+  &::after
+    border-left: 0
+    border-top: 0
+    left: $position-offset-menu-item
+    top: $position-offset-menu-item
+    width: 205px
 
 .home-wrapper
   display: flex
