@@ -1,4 +1,4 @@
-const config = require('./webpack.config.js')
+const config = require('./webpack.dev.js')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 config.mode = 'production'
