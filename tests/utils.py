@@ -1,5 +1,6 @@
 from copy import copy
 
+from django.conf import settings
 from django.urls import reverse
 
 
@@ -35,7 +36,9 @@ def assert_permissions(client_type, response_code_mapping, client_mapping, url_r
     """
     for method in response_code_mapping.keys():
         for url in url_reverse:
-            response_code = getattr(client_mapping[client_type], method)(reverse(url)).status_code
+            response_code = getattr(
+                client_mapping[client_type], method
+            )(reverse(url), secure=not settings.DEBUG).status_code
 
             assert response_code == response_code_mapping[method], print(
                 'client: {}, method: {}, received: {}, expected: {}'.format(
