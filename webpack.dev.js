@@ -17,9 +17,6 @@ module.exports = {
   },
   devtool: 'eval-source-map',
   devServer: {
-    headers: {
-      'Access-Control-Allow-Origin': '*'
-    },
     compress: true,
     hot: true,
   },
