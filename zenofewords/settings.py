@@ -128,10 +128,5 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False,
         },
-        'shop': {
-            'handlers': ['logfile'],
-            'level': 'ERROR',
-            'propagate': False
-        },
     },
 }
