@@ -1,0 +1,27 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Activate virtualenv
+        run: |
+          workon zenofewords
+      - name: Install Python packages
+        run: |
+          pip install --upgrade -r requirements_prod.txt
+      - name: Run migrations
+        run: |
+          ./manage.py migrate
+      - name: Install node packages, build bundle
+        run: |
+          yarn install
+          yarn build
+          
