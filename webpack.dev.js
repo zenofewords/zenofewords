@@ -11,7 +11,7 @@ module.exports = {
     queries: './static/javascript/queries',
   },
   output: {
-    filename: '[name]_[hash].js',
+    filename: '[name]_[contenthash].js',
     path: path.resolve(__dirname, 'staticfiles/bundles'),
     publicPath: 'http://localhost:8080/static/bundles/',
   },
@@ -35,18 +35,9 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass'),
-            }
-          },
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
         ]
       },
     ]
@@ -56,7 +47,7 @@ module.exports = {
       filename: './webpack-stats.json',
     }),
     new MiniCssExtractPlugin({
-      filename: '[name]_[hash].css',
+      filename: '[name]_[contenthash].css',
     }),
   ],
 }
