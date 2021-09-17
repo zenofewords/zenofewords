@@ -10,3 +10,12 @@ restart:
 	sudo systemctl restart gunicorn
 	sudo systemctl restart nginx
 	sudo systemctl restart memcached
+
+deploy:
+	git pull origin master
+	pip install --upgrade -r requirements_prod.txt
+	./manage.py migrate
+	./manage.py collectstatic
+	yarn install
+	yarn build
+	make restart
