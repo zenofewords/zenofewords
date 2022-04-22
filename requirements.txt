@@ -1,5 +1,5 @@
 asgiref==3.4.1
-Django==3.2.12
+Django==3.2.13
 django-webpack-loader==1.4.1
 psycopg2-binary==2.9.3
 python-dotenv==0.19.2
