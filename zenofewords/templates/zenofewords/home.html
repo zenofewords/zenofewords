@@ -12,12 +12,14 @@
 
 {% block header %}
   {{ block.super }}
+  <!--
   <div class="desktop-menu">
     <a href="{% url 'bio' %}" class="desktop-menu-link desktop-menu-link-top-left" aria-label="Bio"></a>
     <a href="{% url 'work' %}" class="desktop-menu-link desktop-menu-link-top-right" aria-label="Work"></a>
     <a href="{% url 'thoughts' %}" class="desktop-menu-link desktop-menu-link-bottom-left" aria-label="Thoughts"></a>
     <a href="{% url 'contact' %}" class="desktop-menu-link desktop-menu-link-bottom-right" aria-label="Contact"></a>
   </div>
+  -->
 {% endblock header %}
 
 {% block content %}
@@ -25,10 +27,10 @@
     <div class="home-intro">
       <h1>Greetings traveller, you've stumbled upon the virtual abode of Dominik Zen</h1>
       <p>
-        A <a href="{% url 'work' %}">software developer</a>, an intermittent gamer, full-time geek.
+        A software developer, an intermittent gamer, full-time geek.
       </p>
       <p>
-        This place is under permanent construction, but often forgotten even by its own creator.
+        I help small and medium sized clients build and utilise their digital infrastructure to grow their business. If you need a software solution, feel free to {% external_link_tag 'https://www.linkedin.com/in/zenofewords/' 'contact me on LinkedIn' '.' %}
       </p>
     </div>
   </div>
