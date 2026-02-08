@@ -8,7 +8,7 @@ PROJECT_DIR="/home/$DEPLOY_USER/zenofewords"
 
 # --- System packages ---
 apt-get update && apt-get upgrade -y
-apt-get install -y git curl postgresql
+apt-get install -y git curl unzip postgresql
 
 # --- Caddy ---
 apt-get install -y debian-keyring debian-archive-keyring apt-transport-https
@@ -43,7 +43,7 @@ su - $DEPLOY_USER -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
 su - $DEPLOY_USER -c "curl -fsSL https://deno.land/install.sh | sh"
 
 # --- Clone repo (as deploy user) ---
-su - $DEPLOY_USER -c "git clone git@github.com:zenofewords/zenofewords.git $PROJECT_DIR"
+su - $DEPLOY_USER -c "git clone https://github.com/zenofewords/zenofewords.git $PROJECT_DIR"
 
 echo ""
 echo "Done. Next steps:"

@@ -1,4 +1,4 @@
-zenofewords.com {
+dominikzen.com {
     reverse_proxy 127.0.0.1:8001
 
     @static path /static/* /media/*
