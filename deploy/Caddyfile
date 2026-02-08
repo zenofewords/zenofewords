@@ -1,0 +1,9 @@
+zenofewords.com {
+    reverse_proxy 127.0.0.1:8001
+
+    @static path /static/* /media/*
+    handle @static {
+        root * /home/deploy/zenofewords
+        file_server
+    }
+}

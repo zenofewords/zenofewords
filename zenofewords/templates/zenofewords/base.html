@@ -1,5 +1,4 @@
 {% load static %}
-{% load render_bundle from webpack_loader %}
 {% load zenofewords_tags %}
 
 <!DOCTYPE html>
@@ -7,18 +6,11 @@
   <head>
     {% block head %}
       <title>
-        {% block title %}Dominik Zen - software developer{% endblock title %}
+        {% block title %}Dominik Zen - software engineer{% endblock title %}
       </title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="msapplication-TileColor" content="#b91d47">
-      <meta name="msapplication-config" content="{% static 'favicon/browserconfig.xml' %}" />
       <meta name="theme-color" content="#db372b">
-
-      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
-      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
-      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
-      <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 
       {% block meta_tags %}
         <meta name="title" content="{{ meta_title }}" />
@@ -43,47 +35,13 @@
       {% endblock meta_tags %}
     {% endblock head %}
 
-    {% render_bundle 'base' 'css' %}
-    {% block scripts %}
-    {% endblock scripts %}
-    {% render_bundle 'queries' 'css' %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
 
   <body>
     <header>
-      <nav>
-        {% block header %}
-          <!--
-          <div class="mobile-menu">
-            <label for="mobile-menu-toggle" class="screen-reader">
-              Menu toggle
-            </label>
-            <input id="mobile-menu-toggle" class="mobile-menu-toggle" type="checkbox" autocomplete="off" />
-            <span class="mobile-menu-line"></span>
-            <span class="mobile-menu-line"></span>
-            <span class="mobile-menu-line"></span>
-
-            <ul style="opacity: 0;" class="mobile-menu-list">
-              <li>
-                {% mobile_menu_link_tag 'home' request.path %}
-              </li>
-              <li>
-                {% mobile_menu_link_tag 'bio' request.path %}
-              </li>
-              <li>
-                {% mobile_menu_link_tag 'work' request.path %}
-              </li>
-              <li>
-                {% mobile_menu_link_tag 'thoughts' request.path %}
-              </li>
-              <li>
-                {% mobile_menu_link_tag 'contact' request.path %}
-              </li>
-            </ul>
-          </div>
-          -->
-        {% endblock header %}
-      </nav>
+      {% block header %}
+      {% endblock header %}
     </header>
 
     <main>
@@ -96,6 +54,7 @@
       {% endblock footer %}
     </footer>
 
+    <script src="{% static 'js/main.js' %}"></script>
     {% block body_scripts %}
     {% endblock body_scripts %}
   </body>

@@ -1,0 +1,248 @@
+Here is Claude's plan:
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+ GitHub Actions CI/CD + Digital Ocean Droplet Setup
+
+ Context
+
+ Set up CI/CD with GitHub Actions and deployment to a single DO droplet running two Django projects (identical stack, different domains). This plan covers
+ the zenofewords repo — the second repo will replicate the same pattern.
+
+ Architecture
+
+ - Droplet: smallest DO droplet, single PostgreSQL instance, two databases
+ - Reverse proxy: Caddy (automatic HTTPS, trivial multi-domain config)
+ - App server: gunicorn (2 workers per project, systemd-managed)
+ - CI: GitHub Actions — test on PR/push, deploy to droplet on push to master
+
+ ---
+ Part 1: GitHub Actions Workflow
+
+ 1. Create .github/workflows/ci.yml
+
+ Single workflow with two jobs: test and deploy.
+
+ Test job (runs on every push and PR):
+ name: CI
+
+ on:
+   push:
+     branches: [master]
+   pull_request:
+     branches: [master]
+
+ jobs:
+   test:
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v4
+
+       - uses: astral-sh/setup-uv@v6
+
+       - uses: denoland/setup-deno@v2
+         with:
+           deno-version: v2.x
+
+       - run: uv sync
+       - run: uv run pytest
+         env:
+           SECRET_KEY: ci-test-secret-key
+
+       - run: deno task test
+
+   deploy:
+     needs: test
+     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+     runs-on: ubuntu-latest
+     steps:
+       - uses: appleboy/ssh-action@v1
+         with:
+           host: ${{ secrets.DROPLET_HOST }}
+           username: ${{ secrets.DROPLET_USER }}
+           key: ${{ secrets.SSH_PRIVATE_KEY }}
+           script: |
+             cd ~/zenofewords
+             git pull origin master
+             ~/.local/bin/uv sync --no-dev
+             ~/.local/bin/uv run python manage.py migrate --noinput
+             ~/.deno/bin/deno task build:prod
+             ~/.local/bin/uv run python manage.py collectstatic --noinput
+             sudo systemctl restart zenofewords
+
+ 2. GitHub Repo Secrets needed
+ ┌─────────────────┬─────────────────────────────────┐
+ │     Secret      │              Value              │
+ ├─────────────────┼─────────────────────────────────┤
+ │ SSH_PRIVATE_KEY │ SSH private key for deploy user │
+ ├─────────────────┼─────────────────────────────────┤
+ │ DROPLET_HOST    │ Droplet IP or hostname          │
+ ├─────────────────┼─────────────────────────────────┤
+ │ DROPLET_USER    │ deploy                          │
+ └─────────────────┴─────────────────────────────────┘
+ ---
+ Part 2: Droplet Setup Reference
+
+ 3. Create deploy/droplet-setup.sh
+
+ One-time bootstrap script (run manually on a fresh droplet). Documents the full server setup:
+
+ #!/usr/bin/env bash
+ # One-time droplet bootstrap — run as root on a fresh Ubuntu 24.04 droplet.
+ # After running this, clone the repo as the deploy user and create .env.
+ set -euo pipefail
+
+ DEPLOY_USER="deploy"
+ PROJECT_DIR="/home/$DEPLOY_USER/zenofewords"
+
+ # --- System packages ---
+ apt-get update && apt-get upgrade -y
+ apt-get install -y git curl postgresql
+
+ # --- Caddy ---
+ apt-get install -y debian-keyring debian-archive-keyring apt-transport-https
+ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' \
+   | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+ curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' \
+   | tee /etc/apt/sources.list.d/caddy-stable.list
+ apt-get update && apt-get install -y caddy
+
+ # --- Deploy user ---
+ adduser --disabled-password --gecos "" $DEPLOY_USER
+ mkdir -p /home/$DEPLOY_USER/.ssh
+ # >>> paste your public key into authorized_keys <<<
+ # cp /root/.ssh/authorized_keys /home/$DEPLOY_USER/.ssh/authorized_keys
+ chown -R $DEPLOY_USER:$DEPLOY_USER /home/$DEPLOY_USER/.ssh
+ chmod 700 /home/$DEPLOY_USER/.ssh
+
+ # Allow deploy user to restart its own services without password
+ cat > /etc/sudoers.d/$DEPLOY_USER << 'SUDOERS'
+ deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart zenofewords
+ deploy ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart caddy
+ SUDOERS
+
+ # --- PostgreSQL database ---
+ sudo -u postgres createuser $DEPLOY_USER
+ sudo -u postgres createdb -O $DEPLOY_USER zenofewords
+
+ # --- uv (Python package manager) ---
+ su - $DEPLOY_USER -c "curl -LsSf https://astral.sh/uv/install.sh | sh"
+
+ # --- Deno ---
+ su - $DEPLOY_USER -c "curl -fsSL https://deno.land/install.sh | sh"
+
+ # --- Clone repo (as deploy user) ---
+ su - $DEPLOY_USER -c "git clone git@github.com:zenofewords/zenofewords.git $PROJECT_DIR"
+
+ echo ""
+ echo "Done. Next steps:"
+ echo "  1. Create $PROJECT_DIR/.env (see .env.example)"
+ echo "  2. Copy Caddyfile to /etc/caddy/Caddyfile"
+ echo "  3. Copy systemd unit to /etc/systemd/system/zenofewords.service"
+ echo "  4. Run: systemctl daemon-reload && systemctl enable --now zenofewords caddy"
+ echo "  5. Run initial migration: cd $PROJECT_DIR && uv run python manage.py migrate"
+
+ 4. Create deploy/zenofewords.service (systemd unit)
+
+ [Unit]
+ Description=zenofewords gunicorn
+ After=network.target postgresql.service
+
+ [Service]
+ User=deploy
+ Group=deploy
+ WorkingDirectory=/home/deploy/zenofewords
+ EnvironmentFile=/home/deploy/zenofewords/.env
+ ExecStart=/home/deploy/zenofewords/.venv/bin/gunicorn zenofewords.wsgi:application --bind 127.0.0.1:8001 --workers 2
+ Restart=on-failure
+ RestartSec=5
+
+ [Install]
+ WantedBy=multi-user.target
+
+ 5. Create deploy/Caddyfile
+
+ zenofewords.com {
+     reverse_proxy 127.0.0.1:8001
+
+     @static path /static/* /media/*
+     handle @static {
+         root * /home/deploy/zenofewords
+         file_server
+     }
+ }
+
+ Note: when the second project is added, append another block for its domain pointing at :8002.
+
+ 6. Create .env.example
+
+ Document required env vars for the droplet:
+
+ ALLOWED_HOSTS=zenofewords.com
+ DB_HOST=localhost
+ DB_NAME=zenofewords
+ DB_PASSWORD=
+ DB_PORT=5432
+ DB_USER=deploy
+ DEBUG=false
+ SECRET_KEY=
+ SECURE_SSL_REDIRECT=true
+
+ ---
+ Part 3: Update makefile + README + .gitignore
+
+ 7. Update makefile
+
+ Replace old pip-based deploy target with uv/deno commands:
+
+ pyc:
+        find . -name \*.pyc -delet
+        find . -name __pycache__ -delet
+
+ deploy:
+        git pull origin maste
+        uv sync --no-de
+        uv run python manage.py migrate --noinpu
+        deno task build:pro
+        uv run python manage.py collectstatic --noinpu
+        sudo systemctl restart zenofeword
+
+ 8. Update README.md
+
+ Short and to the point — project description, stack, how to develop, how to deploy.
+
+ 9. Add gunicorn>=23.0 to project dependencies
+
+ Required on the droplet — add to main deps in pyproject.toml, run uv sync.
+
+ 10. Update .gitignore
+
+ Add .pytest_cache/ entry (generated by pytest runs).
+
+ ---
+ Files changed
+ ┌────────────────────────────┬─────────────────────────────┐
+ │            File            │           Action            │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ .github/workflows/ci.yml   │ Create                      │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ deploy/droplet-setup.sh    │ Create                      │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ deploy/zenofewords.service │ Create                      │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ deploy/Caddyfile           │ Create                      │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ .env.example               │ Create                      │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ makefile                   │ Edit — update deploy target │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ pyproject.toml             │ Edit — add gunicorn         │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ README.md                  │ Rewrite                     │
+ ├────────────────────────────┼─────────────────────────────┤
+ │ .gitignore                 │ Edit — add .pytest_cache/   │
+ └────────────────────────────┴─────────────────────────────┘
+ Verification
+
+ 1. uv run pytest — Python tests still pass
+ 2. deno task test — Deno tests still pass
+ 3. Push to a branch, open a PR — verify the test job runs green on GitHub
+ 4. Merge to master — verify deploy job triggers (will fail until droplet is set up + secrets added, which is expected)
