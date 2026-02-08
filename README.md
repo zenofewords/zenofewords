@@ -26,4 +26,4 @@ deno task test
 
 ## Deployment
 
-Pushes to `main` trigger the GitHub Actions workflow which runs tests and deploys to the droplet via SSH.
+Pushes to `main` trigger the GitHub Actions workflow which runs tests and deploys to the Digital Ocean droplet via SSH.
