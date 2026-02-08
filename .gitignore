@@ -22,6 +22,9 @@ static/js/
 # dotenv
 *.env
 
+# Docker
+docker-compose.yml
+
 # OS
 .DS_Store
 

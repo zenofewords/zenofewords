@@ -27,5 +27,3 @@ deno task test
 ## Deployment
 
 Pushes to `main` trigger the GitHub Actions workflow which runs tests and deploys to the droplet via SSH.
-
-For initial droplet setup, see `deploy/droplet-setup.sh`.
