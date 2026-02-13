@@ -37,6 +37,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/zenofewords
+            git checkout deno.lock
             git pull origin main
             ~/.local/bin/uv sync --no-dev
             ~/.local/bin/uv run python manage.py migrate --noinput

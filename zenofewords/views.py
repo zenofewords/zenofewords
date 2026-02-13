@@ -1,5 +1,15 @@
 from django.contrib.sites.shortcuts import get_current_site
-from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.views.generic import TemplateView, View
+
+
+class RobotsTxtView(View):
+    def get(self, request):
+        lines = [
+            "User-agent: *",
+            "Allow: /",
+        ]
+        return HttpResponse("\n".join(lines), content_type="text/plain")
 
 
 class MetaMixin(TemplateView):

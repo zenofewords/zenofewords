@@ -1,9 +1,25 @@
-dominikzen.com {
-    reverse_proxy 127.0.0.1:8001
+dominikzen.com, www.dominikzen.com {
+    encode gzip zstd
 
-    @static path /static/* /media/*
-    handle @static {
-        root * /home/deploy/zenofewords
+    handle /static/* {
+        uri strip_prefix /static
+        root * /home/deploy/zenofewords/staticfiles
+
+        @immutable path *.woff2 *.woff *.ttf
+        header @immutable Cache-Control "public, max-age=31536000, immutable"
+
+        @assets path *.css *.js *.svg *.png *.ico *.webp *.jpg *.jpeg
+        header @assets Cache-Control "public, max-age=2592000, stale-while-revalidate=604800"
+
         file_server
     }
+
+    handle /media/* {
+        uri strip_prefix /media
+        root * /home/deploy/zenofewords/media
+        header Cache-Control "public, max-age=7776000, stale-while-revalidate=604800"
+        file_server
+    }
+
+    reverse_proxy 127.0.0.1:8001
 }
