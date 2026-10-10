@@ -7,7 +7,7 @@ User=deploy
 Group=deploy
 WorkingDirectory=/home/deploy/zenofewords
 EnvironmentFile=/home/deploy/zenofewords/.env
-ExecStart=/home/deploy/zenofewords/.venv/bin/gunicorn zenofewords.wsgi:application --bind 127.0.0.1:8001 --workers 2
+ExecStart=/home/deploy/zenofewords/.venv/bin/gunicorn zenofewords.wsgi:application --bind 127.0.0.1:8001 --workers 2 --no-control-socket
 Restart=on-failure
 RestartSec=5
 
