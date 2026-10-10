@@ -1,7 +1,4 @@
 import pytest
-from django.test import RequestFactory
-
-from zenofewords.views import HomeView
 
 
 @pytest.mark.django_db
